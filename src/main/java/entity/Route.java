@@ -24,6 +24,9 @@ public class Route implements Inputable, Serializable {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public long getDistance() {
         return distance;

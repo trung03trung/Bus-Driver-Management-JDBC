@@ -17,7 +17,7 @@ public class RouteDAOImpl implements RouteDAO {
 
             Connection conn = OracleConnUtils.getOracleConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
-            int id=getAll().size()+1;
+            int id=100+getAll().size();
             pstm.setInt(1,id);
             pstm.setLong(2, route.getDistance());
             pstm.setInt(3, route.getStopPoint());
@@ -42,7 +42,7 @@ public class RouteDAOImpl implements RouteDAO {
             ResultSet rs=st.executeQuery(sql);
             List<Route> routes=new ArrayList<>();
             while (rs.next()){
-                int id= rs.getInt(1);
+                int id= rs.getInt("id");
                 long distance=rs.getLong("distance");
                 int stopPoint=rs.getInt("stoppoint");
                 Route r=new Route(id,distance,stopPoint);
@@ -50,6 +50,31 @@ public class RouteDAOImpl implements RouteDAO {
             }
             conn.close();
             return routes;
+        }catch (ClassNotFoundException e){
+            System.out.println(e);
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    @Override
+    public Route getOneById(int id) {
+        String sql="SELECT * FROM route WHERE id=?";
+        try {
+
+            Connection conn = OracleConnUtils.getOracleConnection();
+            PreparedStatement pstm=conn.prepareStatement(sql);
+            pstm.setInt(1,id);
+            ResultSet rs=pstm.executeQuery();
+            Route r=new Route();
+            while (rs.next()){
+                r.setId(rs.getInt("id"));
+                r.setDistance(rs.getLong("distance"));
+            r.setStopPoint(rs.getInt("stoppoint"));
+            }
+            conn.close();
+            return r;
         }catch (ClassNotFoundException e){
             System.out.println(e);
         }catch (SQLException e){

@@ -7,4 +7,5 @@ import java.util.List;
 public interface RouteDAO {
     boolean save(Route route);
     List<Route> getAll();
+    Route getOneById(int id);
 }

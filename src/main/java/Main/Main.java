@@ -1,6 +1,7 @@
 package Main;
 
 import Utils.OracleConnUtils;
+import service.DivisionService;
 import service.DriverService;
 import service.RouteService;
 
@@ -13,6 +14,7 @@ import java.util.Scanner;
 public class Main {
     public static DriverService driverService=new DriverService();
     public static RouteService routeService=new RouteService();
+    public static DivisionService divisionService=new DivisionService();
     public static void main(String[] args)  {
         while (true) {
             System.out.println("-------Phần mềm quản lý điểm sinh viên-------");
@@ -42,6 +44,19 @@ public class Main {
                 case 4:
                     routeService.showAllRoute();
                     break;
+                case 5:
+                    divisionService.addNewDivision();
+                    divisionService.showAllDivision();
+                    break;
+                case 6:
+                    divisionService.sortByNameDriver();
+
+                    break;
+                case 7:
+                    divisionService.sortByNumTurn();
+                    break;
+
+
                 default:
                     System.out.println("Chỉ chọn từ 0 đến 8!!");
                     break;

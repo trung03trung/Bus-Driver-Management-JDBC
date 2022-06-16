@@ -2,6 +2,7 @@ package dao;
 
 import Utils.OracleConnUtils;
 import entity.Driver;
+import entity.Route;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class DirverDAOImpl implements DriverDAO {
 
             Connection conn = OracleConnUtils.getOracleConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
-            int id=getAll().size()+1;
+            int id=10000+getAll().size();
             pstm.setInt(1,id);
             pstm.setString(2, driver.getName());
             pstm.setString(3, driver.getAddress());
@@ -56,5 +57,33 @@ public class DirverDAOImpl implements DriverDAO {
             }
             return null;
         }
+
+    @Override
+    public Driver getOneById(int id) {
+        String sql="SELECT * FROM driver WHERE id=?";
+        try {
+
+            Connection conn = OracleConnUtils.getOracleConnection();
+            PreparedStatement pstm=conn.prepareStatement(sql);
+            pstm.setInt(1,id);
+            ResultSet rs=pstm.executeQuery();
+            Driver d=new Driver();
+            while (rs.next()){
+                d.setId(rs.getInt("id"));
+                d.setName(rs.getString("name"));
+                d.setAddress(rs.getString("address"));
+                d.setPhoneNum(rs.getString("phonenum"));
+                d.setLevel(rs.getString("levels"));
+            }
+            conn.close();
+            return d;
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
     }
+
+}
 

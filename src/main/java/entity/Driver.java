@@ -21,9 +21,7 @@ public class Driver extends Person implements Serializable {
         super(id, name, address, phoneNum);
         this.level = level;
     }
-    public void setID(){
-        this.id=Driver.autoID++;
-    }
+
 
     public String getLevel() {
         return level;
